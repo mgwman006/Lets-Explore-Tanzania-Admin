@@ -6,7 +6,6 @@ import { useEffect, useState } from "react";
 import { addEndOfTourInformation, addPickUpInformation, addTourActivity, addTourPrices, deleteTourPrice, getCurrencies, getDestinations, getPrivateTourDetails, getTourGuideDetails, updatePrivateTour } from "../services/privateTourService";
 import TextArea from "antd/es/input/TextArea";
 import ImgCrop from "antd-img-crop";
-import { Update } from "vite/types/hmrPayload.js";
 
 type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
@@ -94,12 +93,14 @@ export default function TourDetails()
                                
                            } else {
                                openNotificationWithIcon('error', apiResponse.message);
+                               setConfirmLoading(false);
                            }
                        }
                    );
    
                } else {
                    openNotificationWithIcon('error', 'Tour ID or Tour Guide ID is undefined.');
+                   
                }
    
                
@@ -234,6 +235,7 @@ export default function TourDetails()
                         setConfirmLoading(false);
                     } else {
                         openNotificationWithIcon('error', apiResponse.message);
+                        setConfirmLoading(false);
                     }
                 }
             );
@@ -310,7 +312,7 @@ export default function TourDetails()
                 }
         );
         
-        }, 2000); 
+        }, 1000); 
     }
 
     // Fetch tour details using the tourId from the location state
