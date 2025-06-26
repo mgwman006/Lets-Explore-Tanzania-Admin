@@ -2,7 +2,7 @@ import { List, Avatar, Image, Card, Row, Col, Button, Popconfirm, PopconfirmProp
 import { useEffect, useState } from "react";
 import { StarOutlined, LikeOutlined, MessageOutlined, SettingOutlined, EditOutlined, EllipsisOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import Meta from "antd/es/card/Meta";
-import { getPrivateTours, deteleTour } from "../../services/admin/privateTourService";
+import { getPrivateTours, deteleTour } from "../services/privateTourService";
 import { useNavigate } from "react-router-dom";
 
 type NotificationType = 'success' | 'info' | 'warning' | 'error';
@@ -84,7 +84,7 @@ export default function AdminTours()
         
         navigate(
             {
-                pathname: "/admin/tours/tourdetails",
+                pathname: "tourdetails",
             },
             {
                 state: { tourId: tourId },
@@ -100,7 +100,7 @@ export default function AdminTours()
                 
                     items={[
                     {
-                        title: <a href="/admin" >Admin Home</a>,
+                        title: <a href="/" >Admin Home</a>,
                     },
                     {
                         title: 'Tours',

@@ -3,7 +3,7 @@ import TextArea from "antd/es/input/TextArea";
 import { useEffect, useState } from "react";
 import ImgCrop from 'antd-img-crop';
 import { EnvironmentOutlined, LoadingOutlined, PlusOutlined, RightOutlined, SmileOutlined, SolutionOutlined, UploadOutlined, UserOutlined } from '@ant-design/icons';
-import { addBannerImage, addEndOfTourInformation, addPhotos, addPickUpInformation, addTourActivity, addTourPrices, createPrivateTour, getCurrencies, getDestinations } from "../../services/admin/privateTourService";
+import { addBannerImage, addEndOfTourInformation, addPhotos, addPickUpInformation, addTourActivity, addTourPrices, createPrivateTour, getCurrencies, getDestinations } from "../services/privateTourService";
 import { useBeforeUnload, useNavigate } from "react-router-dom";
 
 const { RangePicker } = DatePicker;
@@ -834,10 +834,10 @@ export default function AddTour()
                   <Breadcrumb
                     items={[
                     {
-                        title: <a href="/admin">Admin Home</a>,
+                        title: <a href="/">Admin Home</a>,
                     },
                     {
-                        title: <a href="/admin/tours">Tours</a>,
+                        title: <a href="/tours">Tours</a>,
                     },
                     {
                         title: 'Add Tour',

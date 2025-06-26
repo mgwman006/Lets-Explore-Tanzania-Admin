@@ -3,7 +3,7 @@ import { Breadcrumb, Button, Card, Col, Image, List, Row, Statistic, Tabs, TabsP
 import Meta from "antd/es/card/Meta";
 import { CalendarFilled, CalendarOutlined, CalendarTwoTone, ClockCircleFilled, ClockCircleTwoTone, DeleteColumnOutlined, DeleteOutlined, DeleteRowOutlined, EnvironmentOutlined, EnvironmentTwoTone, ExclamationCircleOutlined, FieldTimeOutlined, LikeOutlined, MoneyCollectTwoTone, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import { useEffect, useState } from "react";
-import { addEndOfTourInformation, addPickUpInformation, addTourActivity, addTourPrices, deleteTourPrice, getCurrencies, getDestinations, getPrivateTourDetails, getTourGuideDetails, updatePrivateTour } from "../../services/admin/privateTourService";
+import { addEndOfTourInformation, addPickUpInformation, addTourActivity, addTourPrices, deleteTourPrice, getCurrencies, getDestinations, getPrivateTourDetails, getTourGuideDetails, updatePrivateTour } from "../services/privateTourService";
 import TextArea from "antd/es/input/TextArea";
 import ImgCrop from "antd-img-crop";
 import { Update } from "vite/types/hmrPayload.js";
@@ -165,8 +165,7 @@ export default function TourDetails()
             
             setConfirmLoading(true);
             setTimeout(() => {
-                if (tourGuide?.id !== undefined) {
-                    addPickUpInformation(tourGuide?.id,values).then(
+                    addPickUpInformation(tourGuide?.id ?? 0,values).then(
                         (apiResponse) => {
                             if (apiResponse.success) {
     
@@ -182,9 +181,7 @@ export default function TourDetails()
                             }
                         }
                     );
-                } else {
-                    openNotificationWithIcon('error', 'Tour ID is undefined.');
-                }
+             
             }, 1000);
     
         }
@@ -1022,10 +1019,10 @@ export default function TourDetails()
             <Breadcrumb
                     items={[
                     {
-                        title: <a href="/admin">Admin Home</a>,
+                        title: <a href="/">Admin Home</a>,
                     },
                     {
-                        title: <a href="/admin/tours" type="button">Tours</a>,
+                        title: <a href="/tours">Tours</a>,
                     },
                     {
                         title: 'Tour Details',

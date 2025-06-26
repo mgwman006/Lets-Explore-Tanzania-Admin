@@ -1,13 +1,10 @@
-import FilteredToursPage from "./components/FilteredToursPage";
+import AdminWelcomePage from "./components/WelcomePage";
+import TourDashboard from "./components/TourDashboard";
+import TourDetails from "./components/TourDetails";
 import Home from "./components/Home";
-import HomePage from "./components/HomePage";
-import Projects from "./components/Projects";
-import AddTour from "./components/admin/AddTour";
-import AdminHome from "./components/admin/AdminHome";
-import AdminTours from "./components/admin/AdminTours";
-import AdminWelcomePage from "./components/admin/AdminWelcomePage";
-import TourDashboard from "./components/admin/TourDashboard";
-import TourDetails from "./components/admin/TourDetails";
+import WelcomePage from "./components/WelcomePage";
+import Tours from "./components/Tours";
+import AddTour from "./components/AddTour";
 
 const routes = [
   {
@@ -16,46 +13,26 @@ const routes = [
     children: [
       {
         path:"",
-        Component: HomePage
-      },
-      {
-        path:"projects",
-        Component: Projects
-      },
-      {
-        path:"filteredtours",
-        Component: FilteredToursPage
-      }
-    ]
-  },
-  {
-    path: "/admin",
-    Component: AdminHome,
-    children: [
-      {
-        path:"",
-        Component:AdminWelcomePage
+        Component: WelcomePage
       },
       {
         path:"tours",
         Component: TourDashboard,
-        children:[
+        children : [
           {
-            path:"",
-            Component:AdminTours,
-
+            path: "",
+            Component: Tours
           },
           {
-            path:"addtour",
-            Component:AddTour
+            path: "tourdetails",
+            Component: TourDetails
           },
           {
-             path:"tourdetails",
-             Component:TourDetails
+            path: "addtour",
+            Component: AddTour
           }
         ]
       }
-      
     ]
   }
 ];

@@ -3,11 +3,11 @@ import { Button, Col, Progress, Row, Image, Layout, Menu, Drawer, Typography, Fl
 import { RightOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { getPrivateTours} from '../../services/admin/privateTourService';
+import { getPrivateTours} from '../services/privateTourService';
 
 type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
-export default function AdminWelcomePage() {
+export default function WelcomePage() {
 
     const navigate = useNavigate();
     const [tours, setTours] = useState<PrivateTourListItemDto[]>([]);
