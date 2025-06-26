@@ -221,6 +221,7 @@ export default function AddTour()
                             
                         } else {
                             openNotificationWithIcon('error', apiResponse.message);
+                            setConfirmLoading(false);
                         }
                     }
                 );
@@ -796,7 +797,7 @@ export default function AddTour()
                         status="success"
                         title="Successfully Created a Tour!"
                         extra={[
-                        <Button type="primary" onClick={() => navigate("/admin/tours")}>
+                        <Button type="primary" onClick={() => navigate("/tours")}>
                             Go to list
                         </Button>,
                         <Button  
@@ -805,7 +806,7 @@ export default function AddTour()
                                    
                                     navigate(
                                         {
-                                            pathname: "/admin/tours/tourdetails",
+                                            pathname: "/tours/tourdetails",
                                         },
                                         {
                                             state: { tourId: createdTour?.id},
@@ -854,7 +855,7 @@ export default function AddTour()
                                     padding:"10px"
                                 }
                         }>
-                            <Steps onChange={(value)=> setCurrent(value)} current={current} items={steps} />
+                            <Steps current={current} items={steps} />
                         </Col>
                     </Row>
                 

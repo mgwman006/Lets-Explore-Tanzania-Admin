@@ -285,7 +285,13 @@ export default function TourDetails()
                 if(apiResponse?.success)
                 {
                     
-                    setTourDetails(apiResponse.data);
+                    setTourDetails(prev => prev ? {
+                        ...prev,
+                        destinations: apiResponse.data.destinations,
+                        title: apiResponse.data.title,
+                        overView: apiResponse.data.overView,
+                        durationDays: apiResponse.data.durationDays
+                    } : undefined);
                     openNotificationWithIcon('success',`${apiResponse.data.title} tour has created successfully`);
                     setOpen(false);
                     setConfirmLoading(false);
@@ -709,7 +715,23 @@ export default function TourDetails()
                                     
                                         (tourGuide?.tourActivities?.length??0) == tourDetails?.durationDays ?
                                             (<Typography.Title level={5}> Tour Activities</Typography.Title>) :
-                                            (<Button variant="outlined" color="green"  onClick={handleOpenActivityModel}>Add Day {(tourGuide?.tourActivities?.length??0)+1} Activity</Button>)
+                                            (
+                                                
+                                                <Alert
+                                                    message="Missing Tour Activities"
+                                                    showIcon
+                                                    description="Please add activities for all days of the tour."
+                                                    type="warning"
+                                                    action={
+                                                        <Button 
+                                                            variant="outlined" 
+                                                            color="green"  
+                                                            onClick={handleOpenActivityModel}>
+                                                                Add Day {(tourGuide?.tourActivities?.length??0)+1} Activity
+                                                        </Button>
+                                                    }
+                                                />
+                                            )
                                     
                                 }
                                 style={{ marginTop: '20px' }}
