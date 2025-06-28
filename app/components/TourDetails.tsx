@@ -257,6 +257,7 @@ export default function TourDetails()
         form.setFieldValue("overView", tourDetails?.overView || "");
         form.setFieldValue("durationDays", tourDetails?.durationDays || 1);
         form.setFieldValue("destinations", tourDetails?.destinations || []);
+        setSelectedDestinations(tourDetails?.destinations || [])
         setOpen(true);
     };
 
