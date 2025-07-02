@@ -54,7 +54,7 @@ export default function Home() {
                       mode="vertical"
                       defaultSelectedKeys={['1']}
                       items={items}
-                      style={{ flex: 1, minWidth: 0, backgroundColor:"#1EB53A" }}
+                      style={{ flex: 1, minWidth: 0}}
                       onClick={() => setShowMenu(false)}
                     />
                 </Drawer>
