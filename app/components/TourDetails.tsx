@@ -474,7 +474,7 @@ export default function TourDetails()
                             open={openPriceModal}
                             onCancel={handleCancelTourPriceModel}
                              width={{
-                                xs: '90%',
+                                xs: '100%',
                                 sm: '80%',
                                 md: '70%',
                                 lg: '60%',
@@ -1040,22 +1040,7 @@ export default function TourDetails()
     return(
         <div
         >
-            {notificationContextHolder}
-            <Breadcrumb
-                    items={[
-                    {
-                        title: <a href="/">Admin Home</a>,
-                    },
-                    {
-                        title: <a href="/tours">Tours</a>,
-                    },
-                    {
-                        title: 'Tour Details',
-                    },
-                    ]}
-            />
-
-            <br />
+            {notificationContextHolder}s
             <div>
                 <Image 
                     width="100%" 

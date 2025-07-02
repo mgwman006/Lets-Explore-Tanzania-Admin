@@ -96,17 +96,6 @@ export default function AdminTours()
     return(
         <div>
             {notificationContextHolder}
-                <Breadcrumb
-                
-                    items={[
-                    {
-                        title: <a href="/" >Admin Home</a>,
-                    },
-                    {
-                        title: 'Tours',
-                    },
-                    ]}
-                />
 
             <div>
                  <List

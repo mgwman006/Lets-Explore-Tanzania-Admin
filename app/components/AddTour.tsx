@@ -832,19 +832,6 @@ export default function AddTour()
             }
         >
                 {contextHolder}
-                  <Breadcrumb
-                    items={[
-                    {
-                        title: <a href="/">Admin Home</a>,
-                    },
-                    {
-                        title: <a href="/tours">Tours</a>,
-                    },
-                    {
-                        title: 'Add Tour',
-                    },
-                    ]}
-                />
                 <div>
                     <Row justify={"center"}>
                         <Col 
