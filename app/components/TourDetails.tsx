@@ -1040,7 +1040,7 @@ export default function TourDetails()
     return(
         <div
         >
-            {notificationContextHolder}s
+            {notificationContextHolder}
             <div>
                 <Image 
                     width="100%" 
