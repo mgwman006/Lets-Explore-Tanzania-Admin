@@ -110,6 +110,7 @@ export const addPhotos = async (tourId: number,photos: FormData) => {
             overView:"",
             durationDays:0,
             bannerImageUrl:"",
+            isLive:false,
             destinations:[],
             tourPrice:[],
             photo:[]
@@ -137,6 +138,7 @@ export const getPrivateTourDetails = async (tourId: number) => {
             overView:"",
             durationDays:0,
             bannerImageUrl:"",
+            isLive:false,
             destinations:[],
             tourPrice:[],
             photo:[]
@@ -321,6 +323,7 @@ export const updatePrivateTour = async (tourId:number,updateData: UpdateTourDeta
         overView: "",
         durationDays: 0,
         bannerImageUrl: "",
+        isLive:false,
         destinations: [],
         tourPrice: [],
         photo: []
@@ -348,4 +351,32 @@ export const deleteTourPrice = async (tourId:number, tourPriceId: number) => {
     }
     return data;
   }
+};
+
+export const postPrivateTour = async (tourId: number) => {
+  
+    try {
+        const response = await api.put<ApiResponse<PrivateTourDetailsDto>>(`/tour/private/${tourId}/go/live`);
+        return response.data;
+      
+    } catch (error) {
+      const data : ApiResponse<PrivateTourDetailsDto> = {
+        success: false,
+        message: typeof error === 'string' ? error : error instanceof Error ? error.message : JSON.stringify(error),
+        data: {
+            id:0,
+            title:"",
+            overView:"",
+            durationDays:0,
+            bannerImageUrl:"",
+            isLive:false,
+            destinations:[],
+            tourPrice:[],
+            photo:[]
+        },
+        statusCode: 0
+      }
+      return data;
+
+    }
 };

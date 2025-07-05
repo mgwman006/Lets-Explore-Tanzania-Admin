@@ -3,7 +3,7 @@ import { Breadcrumb, Button, Card, Col, Image, List, Row, Statistic, Tabs, TabsP
 import Meta from "antd/es/card/Meta";
 import { CalendarFilled, CalendarOutlined, CalendarTwoTone, ClockCircleFilled, ClockCircleTwoTone, DeleteColumnOutlined, DeleteOutlined, DeleteRowOutlined, EnvironmentOutlined, EnvironmentTwoTone, ExclamationCircleOutlined, FieldTimeOutlined, LikeOutlined, MoneyCollectTwoTone, PlusOutlined, UploadOutlined } from '@ant-design/icons';
 import { useEffect, useState } from "react";
-import { addEndOfTourInformation, addPickUpInformation, addTourActivity, addTourPrices, deleteTourPrice, getCurrencies, getDestinations, getPrivateTourDetails, getTourGuideDetails, updatePrivateTour } from "../services/privateTourService";
+import { addEndOfTourInformation, addPickUpInformation, addTourActivity, addTourPrices, deleteTourPrice, getCurrencies, getDestinations, getPrivateTourDetails, getTourGuideDetails, postPrivateTour, updatePrivateTour } from "../services/privateTourService";
 import TextArea from "antd/es/input/TextArea";
 import ImgCrop from "antd-img-crop";
 
@@ -1032,6 +1032,33 @@ export default function TourDetails()
         }
     );
 
+    const confirm = () =>
+    new Promise((resolve) => {
+      setTimeout(
+        () => {
+            postPrivateTour(tourDetails?.id ?? 0)
+            .then(
+                (apiResponse) =>
+                {
+                    if(apiResponse.success)
+                    {
+                        setTourDetails(apiResponse.data);
+                        openNotificationWithIcon('success', "live status updated successfully");
+                    }
+                    else{
+                        openNotificationWithIcon('error', apiResponse.message);
+                    }
+                }
+            ).catch(
+                (error) =>
+                {
+                    openNotificationWithIcon('error', error);
+                }
+            )
+            resolve(null);
+        },
+        2000);
+    });
 
 
 
@@ -1055,6 +1082,29 @@ export default function TourDetails()
                     }}
                 />
             </div>
+            {
+                !tourDetails?.isLive && (
+                    <Alert
+                        message="No Live"
+                        showIcon
+                        description="This tour is not available for customers, once you filled all required details, post it to go live"
+                        type="warning"
+                        action={
+                            <Popconfirm
+                                title="Are you sure you need this tour to go live"
+                                onConfirm={confirm}
+                                onOpenChange={() => console.log('open change')}
+                                >
+                                    <Button size="small" color="green" variant="solid">
+                                        Go Live
+                                    </Button>
+                            </Popconfirm>
+                            
+                        }
+                    />
+                )
+                
+            }
             <Row
                 style={{backgroundColor:""}}
             >

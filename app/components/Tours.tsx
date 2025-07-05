@@ -1,4 +1,4 @@
-import { List, Avatar, Image, Card, Row, Col, Button, Popconfirm, PopconfirmProps, notification, Modal, Breadcrumb } from "antd";
+import { List, Avatar, Image, Card, Row, Col, Button, Popconfirm, PopconfirmProps, notification, Modal, Breadcrumb, Tag } from "antd";
 import { useEffect, useState } from "react";
 import { StarOutlined, LikeOutlined, MessageOutlined, SettingOutlined, EditOutlined, EllipsisOutlined, DeleteOutlined, PlusOutlined } from "@ant-design/icons";
 import Meta from "antd/es/card/Meta";
@@ -153,6 +153,7 @@ export default function AdminTours()
                                         <DeleteOutlined key="setting" />
                                     </Popconfirm>,
                                     <EditOutlined key="edit" onClick={() => handleMoreTourDetails(item.id)}/>,
+                                    <Tag color={item.isLive?"success":"warning"}>{ item.isLive ? "live" :"Not Live"}</Tag>
                                 ]}
                             >
                                 <Meta
