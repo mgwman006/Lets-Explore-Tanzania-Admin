@@ -4,14 +4,20 @@ import { RightOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { getPrivateTours} from '../services/privateTourService';
+import { OperatorDetails } from '../models/operator';
+import { getOperator } from '../services/userService';
+import { useUserContext } from '../contexts/UserContext';
+import { getToursByOperatorId } from '../services/tourOperatorService';
 
 type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
 export default function WelcomePage() {
 
     const navigate = useNavigate();
-    const [tours, setTours] = useState<PrivateTourListItemDto[]>([]);
+    const [tours, setTours] = useState<TourListItemDto[]>([]);
     const [notificationApi, notificationContextHolder] = notification.useNotification();
+    const { userStatus, user, operator} = useUserContext(); // Get user status and login state from context
+    
 
     const openNotificationWithIcon = (type: NotificationType, message:string) => {
         notificationApi[type]({
@@ -21,7 +27,7 @@ export default function WelcomePage() {
 
     useEffect(() => {
         // You can add side effects here if needed
-        getPrivateTours().then(
+        getToursByOperatorId(operator?.id ?? 0).then(
             (apiResponse) => {
                 if(apiResponse?.success)
                 {

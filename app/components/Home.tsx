@@ -1,9 +1,11 @@
-import { Button, Col, Flex, Progress, Row,Image, Layout, Menu, Drawer, Typography } from 'antd';
+import { Button, Col, Flex, Progress, Row,Image, Layout, Menu, Drawer, Typography, Avatar, notification } from 'antd';
 import { Content, Footer, Header } from 'antd/es/layout/layout';
 import { isMobile, isTablet, isBrowser } from 'react-device-detect';
-import { Link, Outlet } from 'react-router-dom';
+import { Link, Outlet, useNavigate } from 'react-router-dom';
 import { LikeOutlined, MenuOutlined, MessageOutlined, ShoppingCartOutlined, StarOutlined, MailOutlined } from '@ant-design/icons';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
+import { useUserContext } from '../contexts/UserContext';
+import { UserStatus } from '../models/auth';
 
 
 const items = [
@@ -19,7 +21,21 @@ const items = [
 ];
 
 export default function Home() {
+  const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
+  const { userStatus, user, setOperator} = useUserContext(); // Get user status and login state from context
+
+  useEffect(
+    () =>
+    {
+      if( userStatus != UserStatus.LoggedIn)
+      {
+        navigate("/login");
+      }
+    }
+    ,
+    []
+  );
 
   return (
     <Layout >
@@ -79,20 +95,46 @@ export default function Home() {
                 width: '100%',
                 display: 'flex',
                 alignItems: 'center',
-                backgroundColor:'#1EB53A'
+                backgroundColor: "white"
               }}
             >
-              <div className="demo-logo" style={{fontSize:'20px', color:'#FCD116'}}>
-                {/* <Image preview={false}  src="mini.png"/> */}
-                <h2>LetsExploreTanzania</h2>
+              <div 
+                className="demo-logo" 
+                style={
+                  {
+                    fontSize:'20px', 
+                  }
+                }
+              >
+                <Image preview={false}  src="logo1.jpg"/>
               </div>
               <Menu
                 theme='light'
                 mode="horizontal"
                 defaultSelectedKeys={['1']}
                 items={items}
-                style={{ flex: 1, minWidth: 0 , backgroundColor:"#1EB53A"}}
+                style={
+                  { 
+                    flex: 1, 
+                    minWidth: 0 , 
+                  }
+                }
               />
+
+              <div>
+                {
+                  userStatus == UserStatus.LoggedIn ?
+                  (
+                    <Avatar style={{ backgroundColor: "green", verticalAlign: 'middle' }} size="large" >
+                      {user?.email.charAt(0).toUpperCase()}
+                    </Avatar>
+                  ) :
+                  (
+                    <Button>LogIn</Button>
+                  )
+                }
+                
+              </div>
 
               
             
@@ -111,5 +153,5 @@ export default function Home() {
             
       </Footer>
     </Layout>
-      );
+  );
 }
