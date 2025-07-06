@@ -1,4 +1,5 @@
 import api from '../api/api';
+import { ApiResponse } from '../models/common/apiresponse';
 
 export const addBannerImage = async (tourId: number,image: FormData) => {
   

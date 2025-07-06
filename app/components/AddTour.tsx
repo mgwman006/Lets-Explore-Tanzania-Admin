@@ -5,6 +5,8 @@ import ImgCrop from 'antd-img-crop';
 import { EnvironmentOutlined, LoadingOutlined, PlusOutlined, RightOutlined, SmileOutlined, SolutionOutlined, UploadOutlined, UserOutlined } from '@ant-design/icons';
 import { addBannerImage, addEndOfTourInformation, addPhotos, addPickUpInformation, addTourActivity, addTourPrices, createPrivateTour, getCurrencies, getDestinations } from "../services/privateTourService";
 import { useBeforeUnload, useNavigate } from "react-router-dom";
+import { useUserContext } from "../contexts/UserContext";
+import { addPrivateTour } from "../services/tourOperatorService";
 
 const { RangePicker } = DatePicker;
 
@@ -48,6 +50,7 @@ export default function AddTour()
     const [tourGuide, setTourGuide] = useState<TourGuideDTO>({} as TourGuideDTO);
     const [open, setOpen] = useState(false);
     const [confirmLoading, setConfirmLoading] = useState(false);
+    const {operator} = useUserContext();
 
     const { Option } = Select;
     const showModal = () => {
@@ -122,7 +125,7 @@ export default function AddTour()
 
 
         setTimeout(() => {
-            createPrivateTour(formData).then(
+            addPrivateTour(operator?.id ?? 0,formData).then(
             (apiResponse) =>
             {
                 if(apiResponse?.success)

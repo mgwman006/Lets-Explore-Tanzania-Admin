@@ -118,3 +118,15 @@ interface UpdateTourPriceDTO{
     pricePerPerson: number,
     currency: string
 }
+
+
+interface TourListItemDto
+{
+    id:number,
+    title:string,
+    overView:string,
+    durationDays:number,
+    bannerImageUrl:string,
+    isLive:boolean,
+    tourType:string
+}
