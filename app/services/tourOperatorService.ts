@@ -58,3 +58,34 @@ export const getToursByOperatorId = async (operatorId: number): Promise<ApiRespo
         };
     }
 };
+
+export const addPrivateTour = async (operatorId:number,userData: FormData) => {
+  try {
+
+    const response = await api.post<ApiResponse<PrivateTourCreatedDto>>(
+        `/operator/${operatorId}/tour/private`, userData,
+        {
+            headers: {'Content-Type': 'multipart/form-data'},
+        }
+    );
+    return response.data;
+
+    
+  } catch (error) {
+    const data : ApiResponse<PrivateTourCreatedDto> = {
+      success: false,
+      message: typeof error === 'string' ? error : error instanceof Error ? error.message : JSON.stringify(error),
+      data: {
+          id:0,
+          tourGuideId:0,
+          title:"",
+          overView:"",
+          durationDays:0,
+          bannerImageUrl:"",
+          destinations:[]
+      },
+      statusCode: 0
+    }
+    return data;
+  }
+};
