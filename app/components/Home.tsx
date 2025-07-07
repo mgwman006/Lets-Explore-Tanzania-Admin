@@ -2,7 +2,7 @@ import { Button, Col, Flex, Progress, Row,Image, Layout, Menu, Drawer, Typograph
 import { Content, Footer, Header } from 'antd/es/layout/layout';
 import { isMobile, isTablet, isBrowser } from 'react-device-detect';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
-import { LikeOutlined, MenuOutlined, MessageOutlined, ShoppingCartOutlined, StarOutlined, MailOutlined } from '@ant-design/icons';
+import { LikeOutlined, MenuOutlined, MessageOutlined, ShoppingCartOutlined, StarOutlined, MailOutlined, LogoutOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import { useUserContext } from '../contexts/UserContext';
 import { UserStatus } from '../models/auth';
@@ -20,6 +20,7 @@ const items = [
 
 ];
 
+
 export default function Home() {
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
@@ -36,7 +37,34 @@ export default function Home() {
     ,
     []
   );
+const mobileItems = [
+  {
+    key: '1',
+    label: <Link to="/" ><b>Home</b></Link>,
+  },
+  {
+    key: '2',
+    label: <Link to="tours" ><b>Tours</b></Link>,
+  },
+  {
+    key: '3',
+    label: 
+       <div>
+                {
+                  userStatus == UserStatus.LoggedIn ?
+                  (
+                    <Link to="/login">Log Out <LogoutOutlined /></Link>
+                  ) :
+                  (
+                    <Button>LogIn</Button>
+                  )
+                }
+                
+        </div> 
+    
+  }
 
+];
   return (
     <Layout >
       {
@@ -50,7 +78,7 @@ export default function Home() {
               width: '100%',
               display: 'flex',
               alignItems: 'center',
-              backgroundColor:'#1EB53A'
+              backgroundColor:'white'
             
             }}
           >
@@ -69,19 +97,28 @@ export default function Home() {
                       theme="light"
                       mode="vertical"
                       defaultSelectedKeys={['1']}
-                      items={items}
+                      items={mobileItems}
                       style={{ flex: 1, minWidth: 0}}
                       onClick={() => setShowMenu(false)}
                     />
                 </Drawer>
             </div>
 
-            {/* <div className="demo-logo" > */}
-            <div style={{  width:'100%', alignContent:'center', color:'#FCD116', textAlign:'center', fontSize:'50'}}>
-              {/* <Image preview={false}  src="logo-white-black.png" width='60%'/> */}
-              <h2>LetsExploreTanzania</h2>
-            </div>
+            <div 
+                className="demo-logo" 
+                style={
+                  {
+                    fontSize:'20px', 
+                    width:"100%"
+                  }
+                }
+              >
+              </div>
+
             
+            <div >
+                <Image preview={false}  src="logo1.jpg"/>
+              </div>
           
           </Header>
         )
