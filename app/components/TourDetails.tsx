@@ -1085,9 +1085,9 @@ export default function TourDetails()
             {
                 !tourDetails?.isLive && (
                     <Alert
-                        message="No Live"
+                        message="Not Live"
                         showIcon
-                        description="This tour is not available for customers, once you filled all required details, post it to go live"
+                        description="This tour is not available for customers, once you filled all required details, click go live"
                         type="warning"
                         action={
                             <Popconfirm

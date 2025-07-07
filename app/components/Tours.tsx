@@ -4,14 +4,17 @@ import { StarOutlined, LikeOutlined, MessageOutlined, SettingOutlined, EditOutli
 import Meta from "antd/es/card/Meta";
 import { getPrivateTours, deteleTour } from "../services/privateTourService";
 import { useNavigate } from "react-router-dom";
+import { getToursByOperatorId } from "../services/tourOperatorService";
+import { useUserContext } from "../contexts/UserContext";
 
 type NotificationType = 'success' | 'info' | 'warning' | 'error';
 export default function AdminTours()
 {
 
     const navigate = useNavigate();
-    const [tours, setTours] = useState<PrivateTourListItemDto[]>([]);
+    const [tours, setTours] = useState<TourListItemDto[]>([]);
     const [notificationApi, notificationContextHolder] = notification.useNotification();
+    const { operator } = useUserContext();
 
     const openNotificationWithIcon = (type: NotificationType, message:string) => {
         notificationApi[type]({
@@ -21,20 +24,15 @@ export default function AdminTours()
 
     const getLatestTourData = () =>
     {
-        getPrivateTours().then(
-            (apiResponse) =>
-            {
-                if (apiResponse && apiResponse.message)
+        getToursByOperatorId(operator?.id ?? 0).then(
+            (apiResponse) => {
+                if(apiResponse?.success)
                 {
                     setTours(apiResponse.data);
                 }
-                else if (apiResponse) 
-                {
-                    openNotificationWithIcon("error",apiResponse.message)
-                }
                 else
                 {
-                    openNotificationWithIcon("error","Failed to fetch tours: apiResponse is undefined")
+                    openNotificationWithIcon("error", apiResponse?.message || "An unknown error occurred");
                 }
             }
         );
@@ -125,6 +123,7 @@ export default function AdminTours()
 
                         <List.Item
                             key={item.title}
+
                             
                         >
                             <Card
@@ -152,12 +151,13 @@ export default function AdminTours()
                                     >
                                         <DeleteOutlined key="setting" />
                                     </Popconfirm>,
-                                    <EditOutlined key="edit" onClick={() => handleMoreTourDetails(item.id)}/>,
-                                    <Tag color={item.isLive?"success":"warning"}>{ item.isLive ? "live" :"Not Live"}</Tag>
+                                    <EditOutlined key="edit" onClick={() => handleMoreTourDetails(item.id)}/>
+                                    
                                 ]}
                             >
                                 <Meta
                                     title={item.title}
+                                    description={<Tag color={item.isLive?"success":"warning"}>{ item.isLive ? "live" :"Not Live"}</Tag>}
                                 />
                             </Card>
                         </List.Item>
