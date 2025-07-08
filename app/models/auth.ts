@@ -16,3 +16,9 @@ export enum UserStatus {
     LoggedIn,
     LoggedOut,
 }
+
+export interface ResetPassWordDTO
+{
+    email:string;
+    passWord:string
+}

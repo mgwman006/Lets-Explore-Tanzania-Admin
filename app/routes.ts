@@ -6,6 +6,7 @@ import Tours from "./components/Tours";
 import AddTour from "./components/AddTour";
 import LogIn from "./components/LogIn";
 import Register from "./components/Register";
+import ResetPassWord from "./components/ResetPassWord";
 
 const routes = [
   {
@@ -43,6 +44,10 @@ const routes = [
   {
     path:"/register",
     Component: Register,
+  },
+  {
+    path:"/resetpassword",
+    Component: ResetPassWord,
   }
 ];
 
