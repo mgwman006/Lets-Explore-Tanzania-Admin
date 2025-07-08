@@ -6,6 +6,7 @@ import { LogInDetails, UserStatus } from "../models/auth";
 import { useUserContext } from "../contexts/UserContext";
 import { login } from "../services/authService";
 import { getOperator } from "../services/userService";
+import Link from "antd/es/typography/Link";
 
 type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
@@ -159,6 +160,9 @@ export default function LogIn()
                                     Register
                                 </Button>                                    
 
+                            </Form.Item>
+                            <Form.Item>
+                                <Link href="/resetpassword">Reset PassWord</Link>
                             </Form.Item>
                             
                             
