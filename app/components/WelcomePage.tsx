@@ -8,6 +8,7 @@ import { OperatorDetails } from '../models/operator';
 import { getOperator } from '../services/userService';
 import { useUserContext } from '../contexts/UserContext';
 import { getToursByOperatorId } from '../services/tourOperatorService';
+import { UserStatus } from '../models/auth';
 
 type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
@@ -26,7 +27,13 @@ export default function WelcomePage() {
     };
 
     useEffect(() => {
-        // You can add side effects here if needed
+
+        if(userStatus === UserStatus.Unknown) return;
+        if(userStatus === UserStatus.LoggedOut)
+        {
+            navigate("/login");
+        }
+
         getToursByOperatorId(operator?.id ?? 0).then(
             (apiResponse) => {
                 if(apiResponse?.success)
@@ -39,7 +46,7 @@ export default function WelcomePage() {
                 }
             }
         );
-    }, []);
+    }, [userStatus]);
 
     return(
         <div>

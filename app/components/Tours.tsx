@@ -6,6 +6,7 @@ import { getPrivateTours, deteleTour } from "../services/privateTourService";
 import { useNavigate } from "react-router-dom";
 import { getToursByOperatorId } from "../services/tourOperatorService";
 import { useUserContext } from "../contexts/UserContext";
+import { UserStatus } from "../models/auth";
 
 type NotificationType = 'success' | 'info' | 'warning' | 'error';
 export default function AdminTours()
@@ -14,7 +15,7 @@ export default function AdminTours()
     const navigate = useNavigate();
     const [tours, setTours] = useState<TourListItemDto[]>([]);
     const [notificationApi, notificationContextHolder] = notification.useNotification();
-    const { operator } = useUserContext();
+    const {userStatus, operator } = useUserContext();
 
     const openNotificationWithIcon = (type: NotificationType, message:string) => {
         notificationApi[type]({
@@ -24,6 +25,7 @@ export default function AdminTours()
 
     const getLatestTourData = () =>
     {
+        
         getToursByOperatorId(operator?.id ?? 0).then(
             (apiResponse) => {
                 if(apiResponse?.success)
@@ -39,10 +41,12 @@ export default function AdminTours()
     }
 
     useEffect(() => {
-        
+
+        if(userStatus === UserStatus.Unknown) return;
+        if(userStatus === UserStatus.LoggedOut) navigate("/login");
         getLatestTourData();
         
-    }, []);
+    }, [userStatus]);
 
     // Ensure the handler matches Popconfirm's onConfirm signature
     const handleDeleteTour = (tourId: number) => 

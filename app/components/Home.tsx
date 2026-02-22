@@ -1,70 +1,86 @@
-import { Button, Col, Flex, Progress, Row,Image, Layout, Menu, Drawer, Typography, Avatar, notification } from 'antd';
+import { Button, Col, Flex, Progress, Row,Image, Layout, Menu, Drawer, Typography, Avatar, notification, MenuProps, Dropdown, Space } from 'antd';
 import { Content, Footer, Header } from 'antd/es/layout/layout';
 import { isMobile, isTablet, isBrowser } from 'react-device-detect';
 import { Link, Outlet, useNavigate } from 'react-router-dom';
-import { LikeOutlined, MenuOutlined, MessageOutlined, ShoppingCartOutlined, StarOutlined, MailOutlined, LogoutOutlined } from '@ant-design/icons';
+import { LikeOutlined, MenuOutlined, MessageOutlined, ShoppingCartOutlined, StarOutlined, MailOutlined, LogoutOutlined, SettingOutlined, DownOutlined, RightOutlined } from '@ant-design/icons';
 import { useEffect, useState } from 'react';
 import { useUserContext } from '../contexts/UserContext';
 import { UserStatus } from '../models/auth';
 
 
-const items = [
-  {
-    key: '1',
-    label: <Link to="/" ><b>Home</b></Link>,
-  },
-  {
-    key: '2',
-    label: <Link to="tours" ><b>Tours</b></Link>,
-  }
-
-];
-
-
 export default function Home() {
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
-  const { userStatus, user, setOperator} = useUserContext(); // Get user status and login state from context
+  const { userStatus, user} = useUserContext(); // Get user status and login state from context
 
   useEffect(
     () =>
     {
-      if( userStatus != UserStatus.LoggedIn)
+      if (userStatus === UserStatus.Unknown) return;
+      if( userStatus === UserStatus.LoggedOut)
       {
         navigate("/login");
       }
     }
     ,
-    []
+    [userStatus]
   );
-const mobileItems = [
-  {
-    key: '1',
-    label: <Link to="/" ><b>Home</b></Link>,
-  },
-  {
-    key: '2',
-    label: <Link to="tours" ><b>Tours</b></Link>,
-  },
-  {
-    key: '3',
-    label: 
-       <div>
-                {
-                  userStatus == UserStatus.LoggedIn ?
-                  (
-                    <Link to="/login">Log Out <LogoutOutlined /></Link>
-                  ) :
-                  (
-                    <Button>LogIn</Button>
-                  )
-                }
-                
-        </div> 
-    
+
+  const handLogOut = () => {
+    localStorage.setItem("userStatus",JSON.stringify(UserStatus.LoggedOut));
+    navigate("/login");
   }
 
-];
+  const mobileItems = [
+    {
+      key: '1',
+      label: <Link to="/" ><b>Home</b></Link>,
+    },
+    {
+      key: '2',
+      label: <Link to="tours" ><b>Tours</b></Link>,
+    },
+    {
+      key: '3',
+      label: 
+        <div>
+                  {
+                    userStatus == UserStatus.LoggedIn ?
+                    (
+                      <Link to="/login">Log Out <LogoutOutlined /></Link>
+                    ) :
+                    (
+                      <Button>LogIn</Button>
+                    )
+                  }
+                  
+          </div> 
+      
+    }
+
+  ];
+  const items = [
+    {
+      key: '1',
+      label: <Link to="/" ><b>Home</b></Link>,
+    }
+  ];
+
+  const userItems: MenuProps['items'] = [
+    {
+      key: '1',
+      label: 'My Account',
+      disabled: true,
+    },
+    {
+      key: '2',
+      label: 'Log Out',
+      icon: <LogoutOutlined />,
+      onClick:handLogOut
+    }
+  ];
+
+
   return (
     <Layout >
       {
@@ -162,9 +178,20 @@ const mobileItems = [
                 {
                   userStatus == UserStatus.LoggedIn ?
                   (
-                    <Avatar style={{ backgroundColor: "green", verticalAlign: 'middle' }} size="large" >
-                      {user?.email.charAt(0).toUpperCase()}
-                    </Avatar>
+                    
+                    <Dropdown menu={{ items:userItems }}>
+                      <a onClick={(e) => e.preventDefault()}>
+                        <Space>
+                          <Avatar 
+                            style={{ backgroundColor: "green", verticalAlign: 'middle' }} 
+                            size="large" 
+                          >
+                            {user?.email.charAt(0).toUpperCase() }
+                          </Avatar>
+                          
+                        </Space>
+                      </a>
+                    </Dropdown>
                   ) :
                   (
                     <Button>LogIn</Button>

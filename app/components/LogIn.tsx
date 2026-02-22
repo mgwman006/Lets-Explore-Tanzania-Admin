@@ -3,7 +3,6 @@ import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router";
 import { useState } from "react";
 import { LogInDetails, UserStatus } from "../models/auth";
-import { useUserContext } from "../contexts/UserContext";
 import { login } from "../services/authService";
 import { getOperator } from "../services/userService";
 import Link from "antd/es/typography/Link";
@@ -16,7 +15,6 @@ export default function LogIn()
     const [loading, setLoading] = useState<boolean>(false);
     const [form] = Form.useForm<LogInDetails>();
     const [apiNotification, notificationContextHolder] = notification.useNotification();
-    const { userStatus, user, setUser, setUserStatus, setOperator} = useUserContext(); // Get user status and login state from context
     
 
     const openNotificationWithIcon = (type: NotificationType, message:string) => {
@@ -36,16 +34,17 @@ export default function LogIn()
                     (apiResponse) => {
                         if(apiResponse.success)
                         {
-                            setUser(apiResponse.data);
-                            setUserStatus(UserStatus.LoggedIn);
-
+                          
                             getOperator(apiResponse.data.id)
                             .then(
                                 (operatorResponse) =>
                                 {
                                     if(operatorResponse.success)
                                     {
-                                        setOperator(operatorResponse.data);
+                                        localStorage.setItem("operator",JSON.stringify(operatorResponse.data));
+                                        localStorage.setItem("user",JSON.stringify(apiResponse.data));
+                                        localStorage.setItem("userStatus",JSON.stringify(UserStatus.LoggedIn));
+
                                         setLoading(false);
                                         navigate("/");
                                     }

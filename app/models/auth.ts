@@ -13,6 +13,7 @@ export interface LogInDetails {
 }
 
 export enum UserStatus {
+    Unknown,
     LoggedIn,
     LoggedOut,
 }
