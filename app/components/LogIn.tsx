@@ -46,7 +46,7 @@ export default function LogIn()
                                         localStorage.setItem("userStatus",JSON.stringify(UserStatus.LoggedIn));
 
                                         setLoading(false);
-                                        navigate("/");
+                                        navigate("/home");
                                     }
                                     else{
                                         openNotificationWithIcon('error',"Faild to load operator");

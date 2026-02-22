@@ -10,7 +10,7 @@ import ResetPassWord from "./components/ResetPassWord";
 
 const routes = [
   {
-    path: "/",
+    path: "/home",
     Component: Home,
     children: [
       {
