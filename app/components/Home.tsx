@@ -11,7 +11,7 @@ import { UserStatus } from '../models/auth';
 export default function Home() {
   const navigate = useNavigate();
   const [showMenu, setShowMenu] = useState(false);
-  const { userStatus, user} = useUserContext(); // Get user status and login state from context
+  const { userStatus,setUserStatus, user} = useUserContext(); // Get user status and login state from context
 
   useEffect(
     () =>
@@ -19,7 +19,7 @@ export default function Home() {
       if (userStatus === UserStatus.Unknown) return;
       if( userStatus === UserStatus.LoggedOut)
       {
-        navigate("/login");
+        navigate("/auth");
       }
     }
     ,
@@ -28,7 +28,8 @@ export default function Home() {
 
   const handLogOut = () => {
     localStorage.setItem("userStatus",JSON.stringify(UserStatus.LoggedOut));
-    navigate("/login");
+    setUserStatus(UserStatus.LoggedOut);
+    navigate("/auth");
   }
 
   const mobileItems = [
