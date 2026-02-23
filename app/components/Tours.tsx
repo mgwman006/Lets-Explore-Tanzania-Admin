@@ -43,7 +43,7 @@ export default function AdminTours()
     useEffect(() => {
 
         if(userStatus === UserStatus.Unknown) return;
-        if(userStatus === UserStatus.LoggedOut) navigate("/login");
+        if(userStatus === UserStatus.LoggedOut) navigate("/auth");
         getLatestTourData();
         
     }, [userStatus]);
@@ -82,17 +82,7 @@ export default function AdminTours()
 
    
     const handleMoreTourDetails = (tourId: number) => {
-        
-        
-        navigate(
-            {
-                pathname: "tourdetails",
-            },
-            {
-                state: { tourId: tourId },
-            }
-        );
-                
+        navigate(`/tours/${tourId}`);
     }
 
     return(

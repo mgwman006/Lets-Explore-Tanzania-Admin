@@ -1,4 +1,4 @@
-import { Button, Checkbox, Col, Flex, Form, Input, Row, Image, notification } from "antd";
+import { Button, Checkbox, Col, Flex, Form, Input, Row, Image, notification, Alert } from "antd";
 import { LockOutlined, UserOutlined } from '@ant-design/icons';
 import { useNavigate } from "react-router";
 import { useState } from "react";
@@ -6,6 +6,7 @@ import { LogInDetails, UserStatus } from "../models/auth";
 import { login } from "../services/authService";
 import { getOperator } from "../services/userService";
 import Link from "antd/es/typography/Link";
+import { useUserContext } from "../contexts/UserContext";
 
 type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
@@ -15,6 +16,7 @@ export default function LogIn()
     const [loading, setLoading] = useState<boolean>(false);
     const [form] = Form.useForm<LogInDetails>();
     const [apiNotification, notificationContextHolder] = notification.useNotification();
+    const { userStatus,setUserStatus, user} = useUserContext(); // Get user status and login state from context
     
 
     const openNotificationWithIcon = (type: NotificationType, message:string) => {
@@ -45,8 +47,10 @@ export default function LogIn()
                                         localStorage.setItem("user",JSON.stringify(apiResponse.data));
                                         localStorage.setItem("userStatus",JSON.stringify(UserStatus.LoggedIn));
 
+                                        setUserStatus(UserStatus.LoggedIn);
+
                                         setLoading(false);
-                                        navigate("/home");
+                                        navigate("/");
                                     }
                                     else{
                                         openNotificationWithIcon('error',"Faild to load operator");
@@ -154,14 +158,19 @@ export default function LogIn()
                                     block
                                     variant="solid"
                                     color="green"
-                                    onClick={() => navigate("/register")}
+                                    onClick={() => navigate("/auth/register")}
                                 >
                                     Register
                                 </Button>                                    
 
                             </Form.Item>
                             <Form.Item>
-                                <Link href="/resetpassword">Reset PassWord</Link>
+                                <Button
+                                    type="link"
+                                    onClick={() => navigate("/auth/resetpassword")}
+                                >
+                                    Reset PassWord
+                                </Button>
                             </Form.Item>
                             
                             

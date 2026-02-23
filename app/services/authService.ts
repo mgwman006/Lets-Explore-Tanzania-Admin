@@ -10,7 +10,7 @@ export const login = async (logInDetails: LogInDetails): Promise<ApiResponse<Use
         let message = "An unexpected error occurred";
         let statusCode = 0;
         if (error.response) {
-            message = JSON.stringify(error.response.data) || "Registration failed";
+            message = JSON.stringify(error.response.data.message) || "Registration failed";
             statusCode = error.response.status;
         } else if (error.request) {
             message = "No response from server";

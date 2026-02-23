@@ -34,7 +34,7 @@ export default function Register()
                         if(apiResponse.success)
                         {
                             openNotificationWithIcon('success',"Operator created successfully");
-                            navigate("/login");
+                            navigate("/auth");
                             setLoading(false);
                             
                         }
