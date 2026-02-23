@@ -31,7 +31,7 @@ export default function WelcomePage() {
         if(userStatus === UserStatus.Unknown) return;
         if(userStatus === UserStatus.LoggedOut)
         {
-            navigate("/login");
+            navigate("/auth");
         }
 
         getToursByOperatorId(operator?.id ?? 0).then(

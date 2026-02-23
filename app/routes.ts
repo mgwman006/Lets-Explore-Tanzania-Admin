@@ -7,15 +7,36 @@ import AddTour from "./components/AddTour";
 import LogIn from "./components/LogIn";
 import Register from "./components/Register";
 import ResetPassWord from "./components/ResetPassWord";
+import AuthLayout from "./components/AuthLayout";
 
 const routes = [
   {
-    path: "/home",
+    path: "/",
     Component: Home,
     children: [
       {
         path:"",
         Component: WelcomePage
+      },
+      {
+        path: "auth",
+        Component: AuthLayout,
+        children: [
+          { 
+            path:"",
+            //index:true,
+            // path: "login", 
+            Component: LogIn 
+          },
+          { 
+            path: "register", 
+            Component: Register 
+          },
+          { 
+            path:"resetpassword",
+            Component: ResetPassWord,
+          }
+        ],
       },
       {
         path:"tours",
@@ -26,7 +47,7 @@ const routes = [
             Component: Tours
           },
           {
-            path: "tourdetails",
+            path: ":tourId",
             Component: TourDetails
           },
           {
@@ -36,19 +57,8 @@ const routes = [
         ]
       }
     ]
-  },
-  {
-    path:"/login",
-    Component: LogIn,
-  },
-  {
-    path:"/register",
-    Component: Register,
-  },
-  {
-    path:"/resetpassword",
-    Component: ResetPassWord,
   }
+  
 ];
 
 export default routes;

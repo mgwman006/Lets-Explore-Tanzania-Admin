@@ -27,7 +27,7 @@ export default function ResetPassWord()
             {
                 if(apiResponse.success)
                 {
-                    navigate("/login");
+                    navigate("/auth");
                 }
                 else
                 {

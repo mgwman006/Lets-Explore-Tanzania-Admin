@@ -1,4 +1,4 @@
-import { Link, useLocation } from "react-router-dom";
+import { Link, useLocation, useParams } from "react-router-dom";
 import { Breadcrumb, Button, Card, Col, Image, List, Row, Statistic, Tabs, TabsProps, Typography, Table, Flex, Modal, Form, notification, Input, InputNumber, Select, Upload, UploadProps, Alert, Popconfirm, DatePicker, Tag, UploadFile } from 'antd';
 import Meta from "antd/es/card/Meta";
 import { CalendarFilled, CalendarOutlined, CalendarTwoTone, ClockCircleFilled, ClockCircleTwoTone, DeleteColumnOutlined, DeleteOutlined, DeleteRowOutlined, EnvironmentOutlined, EnvironmentTwoTone, ExclamationCircleOutlined, FieldTimeOutlined, LikeOutlined, MoneyCollectTwoTone, PlusOutlined, UploadOutlined } from '@ant-design/icons';
@@ -11,8 +11,7 @@ type NotificationType = 'success' | 'info' | 'warning' | 'error';
 
 export default function TourDetails()
 {
-    const location = useLocation();
-    const tourId= location.state.tourId;
+    const { tourId } = useParams();
     const [tourDetails, setTourDetails] = useState<PrivateTourDetailsDto>();
     const [previewImage,setPreviewImage] = useState("");
     const [tourGuide, setTourGuide] = useState<TourGuideDTO>();
