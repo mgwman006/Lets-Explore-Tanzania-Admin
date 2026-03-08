@@ -32,38 +32,20 @@ export default function Home() {
     navigate("/auth");
   }
 
-  const mobileItems = [
-    {
-      key: '1',
-      label: <Link to="/" ><b>Home</b></Link>,
-    },
-    {
-      key: '2',
-      label: <Link to="tours" ><b>Tours</b></Link>,
-    },
-    {
-      key: '3',
-      label: 
-        <div>
-                  {
-                    userStatus == UserStatus.LoggedIn ?
-                    (
-                      <Link to="/login">Log Out <LogoutOutlined /></Link>
-                    ) :
-                    (
-                      <Button>LogIn</Button>
-                    )
-                  }
-                  
-          </div> 
-      
-    }
+  const goToLogIn = () => {
+    navigate("/auth");
+  }
 
-  ];
+  const goHome = () => {
+    navigate("/");
+  }
+
+
   const items = [
     {
       key: '1',
-      label: <Link to="/" ><b>Home</b></Link>,
+      label: 'Home',
+      onClick:goHome
     }
   ];
 
@@ -75,6 +57,11 @@ export default function Home() {
     },
     {
       key: '2',
+      label: 'Home',
+      onClick:goHome,
+    },
+    {
+      key: '3',
       label: 'Log Out',
       icon: <LogoutOutlined />,
       onClick:handLogOut
@@ -114,7 +101,7 @@ export default function Home() {
                       theme="light"
                       mode="vertical"
                       defaultSelectedKeys={['1']}
-                      items={mobileItems}
+                      items={userItems}
                       style={{ flex: 1, minWidth: 0}}
                       onClick={() => setShowMenu(false)}
                     />
@@ -134,7 +121,7 @@ export default function Home() {
 
             
             <div >
-                <Image preview={false}  src="logo1.jpg"/>
+                <Image preview={false}  src="/logo1.jpg"/>
               </div>
           
           </Header>
@@ -160,7 +147,7 @@ export default function Home() {
                   }
                 }
               >
-                <Image preview={false}  src="logo1.jpg"/>
+                <Image preview={false}  src="/logo1.jpg"/>
               </div>
               <Menu
                 theme='light'
@@ -214,7 +201,8 @@ export default function Home() {
       </Content>
       <Footer style={{textAlign:'center'}}>
 
-        ©{new Date().getFullYear()} Created by <a href='https://www.tante.tz' target="_blank">tante.tz</a>
+        {/* ©{new Date().getFullYear()} Created by <a href='https://www.tante.tz' target="_blank">tante.tz</a> */}
+        ©{new Date().getFullYear()} Created by tante.tz
             
       </Footer>
     </Layout>

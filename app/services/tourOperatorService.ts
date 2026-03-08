@@ -2,6 +2,7 @@ import { data } from 'react-router';
 import api from '../api/api';
 import { AddOperator, CreatedOperator } from '../models/operator';
 import { ApiResponse } from '../models/common/apiresponse';
+import BookingDetails from '../models/booking';
 
 export const registerOperator = async (operatorData: AddOperator): Promise<ApiResponse<CreatedOperator>> => {
     try {
@@ -88,4 +89,29 @@ export const addPrivateTour = async (operatorId:number,userData: FormData) => {
     }
     return data;
   }
+};
+
+export const getBookingsByOperatorId = async (operatorId: number): Promise<ApiResponse<BookingDetails[]>> => {
+    try {
+        const response = await api.get<ApiResponse<BookingDetails[]>>(`/operator/${operatorId}/bookings`);
+        return response.data;
+    } catch (error: any) {
+        let message = "An unexpected error occurred";
+        let statusCode = 0;
+        if (error.response) {
+            message = JSON.stringify(error.response.data) || "failed";
+            statusCode = error.response.status;
+        } else if (error.request) {
+            message = "No response from server";
+        } else if (error.message) {
+            message = error.message;
+        }
+
+        return {
+            success: false,
+            message,
+            data: [],
+            statusCode
+        };
+    }
 };

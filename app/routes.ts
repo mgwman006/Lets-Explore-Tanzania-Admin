@@ -8,6 +8,9 @@ import LogIn from "./components/LogIn";
 import Register from "./components/Register";
 import ResetPassWord from "./components/ResetPassWord";
 import AuthLayout from "./components/AuthLayout";
+import Bookings from "./components/Bookings";
+import BookingDetails from "./components/BookingDetails";
+import BookingsDashboard from "./components/BookingsDashboard";
 
 const routes = [
   {
@@ -24,8 +27,6 @@ const routes = [
         children: [
           { 
             path:"",
-            //index:true,
-            // path: "login", 
             Component: LogIn 
           },
           { 
@@ -53,6 +54,20 @@ const routes = [
           {
             path: "addtour",
             Component: AddTour
+          }
+        ]
+      },
+      {
+        path:"bookings",
+        Component: BookingsDashboard,
+        children : [
+          {
+            path: "",
+            Component: Bookings
+          },
+          {
+            path: ":bookingId",
+            Component: BookingDetails
           }
         ]
       }
