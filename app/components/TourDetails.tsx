@@ -281,7 +281,7 @@ export default function TourDetails()
         setTimeout(() => {
 
             values.destinations = selectedDestinations;
-            updatePrivateTour(tourId,values).then(
+            updatePrivateTour(Number(tourId),values).then(
             (apiResponse) =>
             {
                 if(apiResponse?.success)
@@ -319,7 +319,7 @@ export default function TourDetails()
     // This is a placeholder, you should replace it with your actual data fetching logic
     // For example, you might use useEffect to fetch the data when the component mounts
     useEffect(() => {
-        getPrivateTourDetails(tourId)
+        getPrivateTourDetails(Number(tourId))
             .then((apiResponse) => {
                 if (apiResponse.success) {
                     setTourDetails(apiResponse.data);
@@ -333,7 +333,7 @@ export default function TourDetails()
             });
 
         // Fetch tour guide details if needed
-        getTourGuideDetails(tourId)
+        getTourGuideDetails(Number(tourId))
             .then((apiResponse) => {
             if (apiResponse.success) {
                 setTourGuide(apiResponse.data);

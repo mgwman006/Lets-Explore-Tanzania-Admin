@@ -25,4 +25,6 @@ export interface OperatorDetails
     lastName : string;
     email : string;
     phone: string;
+    numberOfTours:number;
+    numberOfBookings:number
 }
