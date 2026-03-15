@@ -218,10 +218,20 @@ export const addTourActivity = async (tourGuideId: number,formData:FormData) => 
           );
           return photoResponse.data;
         
-      } catch (error) {
+      } catch (error:any) {
+        let message = "An unexpected error occurred";
+        let statusCode = 0;
+        if (error.response) {
+            message = JSON.stringify(error.response.data.message) || "Activity Update failed";
+            statusCode = error.response.status;
+        } else if (error.request) {
+            message = "No response from server";
+        } else if (error.message) {
+            message = error.message;
+        }
         const data : ApiResponse<TourGuideDTO> = {
           success: false,
-          message: typeof error === 'string' ? error : error instanceof Error ? error.message : JSON.stringify(error),
+          message: message,
           data: {
               id:0,
               pickUpInformation:{details:"",location:"",dateTime:""},
